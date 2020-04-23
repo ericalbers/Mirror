@@ -1,9 +1,9 @@
 using UnityEngine;
 using Mirror;
 
-namespace MirrorTest
+namespace SyncListMissingParamlessCtorManuallyInitialized
 {
-    class SyncListMissingParamlessCtorManuallyInitialized : NetworkBehaviour
+    class MyBehaviour : NetworkBehaviour
     {
         public SyncListString2 Foo = new SyncListString2(20);
     }

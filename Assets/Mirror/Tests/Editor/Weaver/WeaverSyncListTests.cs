@@ -2,178 +2,156 @@ using NUnit.Framework;
 
 namespace Mirror.Weaver.Tests
 {
-    public class WeaverSyncListTests : WeaverTestsBuildFromTestName
+    public class WeaverSyncListTests : BatchedWeaverTests
     {
         [Test]
         public void SyncList()
         {
-            Assert.That(CompilationFinishedHook.WeaveFailed, Is.False);
-            Assert.That(weaverErrors, Is.Empty);
+            AssertThatWeaverErrorIs(false);
         }
 
-        [Test]
+        [BatchedTest(true)]
         public void SyncListByteValid()
         {
-            Assert.That(CompilationFinishedHook.WeaveFailed, Is.False);
-            Assert.That(weaverErrors, Is.Empty);
+            AssertThatWeaverErrorIs(false);
         }
 
-        [Test]
+        [BatchedTest(true)]
         public void SyncListGenericAbstractInheritance()
         {
-            Assert.That(CompilationFinishedHook.WeaveFailed, Is.False);
-            Assert.That(weaverErrors, Is.Empty);
+            AssertThatWeaverErrorIs(false);
         }
 
-        [Test]
+        [BatchedTest(true)]
         public void SyncListGenericInheritance()
         {
-            Assert.That(CompilationFinishedHook.WeaveFailed, Is.False);
-            Assert.That(weaverErrors, Is.Empty);
+            AssertThatWeaverErrorIs(false);
         }
 
-        [Test]
-        public void SyncListGenericInheritanceWithMultipleGeneric()
+        [BatchedTest(false)]
+        public void SyncListErrorForGenericInheritanceWithMultipleGeneric()
         {
-            Assert.That(CompilationFinishedHook.WeaveFailed, Is.True);
-            Assert.That(weaverErrors, Has.Some.Match(@"Mirror\.Weaver error: Could not find generic arguments for Mirror\.SyncList`1 using MirrorTest\.SomeListInt"));
-            Assert.That(weaverErrors, Has.Some.Match(@"Mirror\.Weaver error: Too many generic argument for MirrorTest\.SomeList`2<System.String,System.Int32>"));
+            AssertErrorListHasMatch(@"Mirror\.Weaver error: Could not find generic arguments for Mirror\.SyncList`1 using SyncListErrorForGenericInheritanceWithMultipleGeneric\.SomeListInt");
+            AssertErrorListHasMatch(@"Mirror\.Weaver error: Too many generic argument for SyncListErrorForGenericInheritanceWithMultipleGeneric\.SomeList`2<System.String,System.Int32>");
         }
 
-        [Test]
+        [BatchedTest(true)]
         public void SyncListInheritance()
         {
-            Assert.That(CompilationFinishedHook.WeaveFailed, Is.False);
-            Assert.That(weaverErrors, Is.Empty);
+            AssertThatWeaverErrorIs(false);
         }
 
-        [Test]
-        public void SyncListMissingParamlessCtor()
+        [BatchedTest(false)]
+        public void SyncListErrorForMissingParamlessCtor()
         {
-            Assert.That(CompilationFinishedHook.WeaveFailed, Is.True);
             string weaverError = @"Mirror\.Weaver error:";
-            string fieldType = @"MirrorTest\.SyncListString2 MirrorTest\.SyncListMissingParamlessCtor::Foo";
+            string fieldType = @"SyncListErrorForMissingParamlessCtor\.SyncListString2 SyncListErrorForMissingParamlessCtor\.MyBehaviour::Foo";
             string errorMessage = @"Can not intialize field because no default constructor was found\. Manually intialize the field \(call the constructor\) or add constructor without Parameter";
-            Assert.That(weaverErrors, Has.Some.Match($"{weaverError} {fieldType} {errorMessage}"));
+            AssertErrorListHasMatch($"{weaverError} {fieldType} {errorMessage}");
         }
-        
-        [Test]
+
+        [BatchedTest(true)]
         public void SyncListMissingParamlessCtorManuallyInitialized()
         {
-            Assert.That(CompilationFinishedHook.WeaveFailed, Is.False);
-            Assert.That(weaverErrors, Is.Empty);
+            AssertThatWeaverErrorIs(false);
         }
 
-        [Test]
+        [BatchedTest(true)]
         public void SyncListNestedStruct()
         {
-            Assert.That(CompilationFinishedHook.WeaveFailed, Is.False);
-            Assert.That(weaverErrors, Is.Empty);
+            AssertThatWeaverErrorIs(false);
         }
 
-        [Test]
+        [BatchedTest(true)]
         public void SyncListNestedInAbstractClass()
         {
-            Assert.That(CompilationFinishedHook.WeaveFailed, Is.False);
-            Assert.That(weaverErrors, Is.Empty);
+            AssertThatWeaverErrorIs(false);
         }
 
-        [Test]
-        public void SyncListNestedInAbstractClassWithInvalid()
+        [BatchedTest(false)]
+        public void SyncListErrorForNestedInAbstractClassWithInvalid()
         {
             // we need this negative test to make sure that SyncList is being processed 
-            Assert.That(CompilationFinishedHook.WeaveFailed, Is.True);
-            Assert.That(weaverErrors, Has.Some.Match(@"Mirror\.Weaver error: UnityEngine\.Object MirrorTest\.SomeAbstractClass/MyNestedStruct::target has unsupported type\. Use a type supported by Mirror instead"));
+            AssertErrorListHasMatch(@"Mirror\.Weaver error: UnityEngine\.Object SyncListErrorForNestedInAbstractClassWithInvalid\.SomeAbstractClass/MyNestedStruct::target has unsupported type\. Use a type supported by Mirror instead");
         }
 
-        [Test]
+        [BatchedTest(true)]
         public void SyncListNestedInStruct()
         {
-            Assert.That(CompilationFinishedHook.WeaveFailed, Is.False);
-            Assert.That(weaverErrors, Is.Empty);
+            AssertThatWeaverErrorIs(false);
         }
 
-        [Test]
-        public void SyncListNestedInStructWithInvalid()
+        [BatchedTest(false)]
+        public void SyncListErrorForNestedInStructWithInvalid()
         {
             // we need this negative test to make sure that SyncList is being processed 
-            Assert.That(CompilationFinishedHook.WeaveFailed, Is.True);
-            Assert.That(weaverErrors, Has.Some.Match(@"Mirror\.Weaver error: UnityEngine\.Object MirrorTest\.SomeData::target has unsupported type\. Use a type supported by Mirror instead"));
+            AssertErrorListHasMatch(@"Mirror\.Weaver error: UnityEngine\.Object SyncListErrorForNestedInStructWithInvalid\.SomeData::target has unsupported type\. Use a type supported by Mirror instead");
         }
 
-        [Test]
+        [BatchedTest(true)]
         public void SyncListStruct()
         {
-            Assert.That(CompilationFinishedHook.WeaveFailed, Is.False);
-            Assert.That(weaverErrors, Is.Empty);
+            AssertThatWeaverErrorIs(false);
         }
 
-        [Test]
+        [BatchedTest(true)]
         public void SyncListStructWithCustomDeserializeOnly()
         {
-            Assert.That(CompilationFinishedHook.WeaveFailed, Is.False);
-            Assert.That(weaverErrors, Is.Empty);
+            AssertThatWeaverErrorIs(false);
         }
 
-        [Test]
+        [BatchedTest(true)]
         public void SyncListStructWithCustomMethods()
         {
-            Assert.That(CompilationFinishedHook.WeaveFailed, Is.False);
-            Assert.That(weaverErrors, Is.Empty);
+            AssertThatWeaverErrorIs(false);
         }
 
-        [Test]
+        [BatchedTest(true)]
         public void SyncListStructWithCustomSerializeOnly()
         {
-            Assert.That(CompilationFinishedHook.WeaveFailed, Is.False);
-            Assert.That(weaverErrors, Is.Empty);
+            AssertThatWeaverErrorIs(false);
         }
 
-        [Test]
+        [BatchedTest(false)]
         public void SyncListErrorForGenericStruct()
         {
-            Assert.That(CompilationFinishedHook.WeaveFailed, Is.True);
             string weaverError = @"Mirror\.Weaver error:";
-            string type = @"MirrorTest\.MyGenericStructList";
-            string errorMessage = @"Can not create Serialize or Deserialize for generic element\. Override virtual methods with custom Serialize and Deserialize to use MirrorTest.MyGenericStruct`1<System.Single> in SyncList";
-            Assert.That(weaverErrors, Has.Some.Match($"{weaverError} {type} {errorMessage}"));
+            string type = @"SyncListErrorForGenericStruct\.MyGenericStructList";
+            string errorMessage = @"Can not create Serialize or Deserialize for generic element\. Override virtual methods with custom Serialize and Deserialize to use SyncListErrorForGenericStruct.MyGenericStruct`1<System.Single> in SyncList";
+            AssertErrorListHasMatch($"{weaverError} {type} {errorMessage}");
         }
 
-        [Test]
+        [BatchedTest(false)]
         public void SyncListErrorForGenericStructWithCustomDeserializeOnly()
         {
-            Assert.That(CompilationFinishedHook.WeaveFailed, Is.True);
             string weaverError = @"Mirror\.Weaver error:";
-            string type = @"MirrorTest\.MyGenericStructList";
-            string errorMessage = @"Can not create Serialize or Deserialize for generic element\. Override virtual methods with custom Serialize and Deserialize to use MirrorTest.MyGenericStruct`1<System.Single> in SyncList";
-            Assert.That(weaverErrors, Has.Some.Match($"{weaverError} {type} {errorMessage}"));
+            string type = @"SyncListErrorForGenericStructWithCustomDeserializeOnly\.MyGenericStructList";
+            string errorMessage = @"Can not create Serialize or Deserialize for generic element\. Override virtual methods with custom Serialize and Deserialize to use SyncListErrorForGenericStructWithCustomDeserializeOnly.MyGenericStruct`1<System.Single> in SyncList";
+            AssertErrorListHasMatch($"{weaverError} {type} {errorMessage}");
         }
 
-        [Test]
+        [BatchedTest(false)]
         public void SyncListErrorForGenericStructWithCustomSerializeOnly()
         {
-            Assert.That(CompilationFinishedHook.WeaveFailed, Is.True);
             string weaverError = @"Mirror\.Weaver error:";
-            string type = @"MirrorTest\.MyGenericStructList";
-            string errorMessage = @"Can not create Serialize or Deserialize for generic element\. Override virtual methods with custom Serialize and Deserialize to use MirrorTest.MyGenericStruct`1<System.Single> in SyncList";
-            Assert.That(weaverErrors, Has.Some.Match($"{weaverError} {type} {errorMessage}"));
+            string type = @"SyncListErrorForGenericStructWithCustomSerializeOnly\.MyGenericStructList";
+            string errorMessage = @"Can not create Serialize or Deserialize for generic element\. Override virtual methods with custom Serialize and Deserialize to use SyncListErrorForGenericStructWithCustomSerializeOnly.MyGenericStruct`1<System.Single> in SyncList";
+            AssertErrorListHasMatch($"{weaverError} {type} {errorMessage}");
         }
 
-        [Test]
+        [BatchedTest(true)]
         public void SyncListGenericStructWithCustomMethods()
         {
-            Assert.That(CompilationFinishedHook.WeaveFailed, Is.False);
-            Assert.That(weaverErrors, Is.Empty);
+            AssertThatWeaverErrorIs(false);
         }
 
-        [Test]
+        [BatchedTest(false)]
         public void SyncListErrorWhenUsingGenericListInNetworkBehaviour()
         {
-            Assert.That(CompilationFinishedHook.WeaveFailed, Is.True);
             string weaverError = @"Mirror\.Weaver error:";
-            string type = @"MirrorTest\.SomeList`1<System\.Int32> MirrorTest\.SyncListErrorWhenUsingGenericListInNetworkBehaviour::someList";
+            string type = @"SyncListErrorWhenUsingGenericListInNetworkBehaviour\.SomeList`1<System\.Int32> SyncListErrorWhenUsingGenericListInNetworkBehaviour.MyBehaviour::someList";
             string errorMessage = @"Can not use generic SyncObjects directly in NetworkBehaviour\. Create a class and inherit from the generic SyncObject instead\.";
-            Assert.That(weaverErrors, Has.Some.Match($"{weaverError} {type} {errorMessage}"));
+            AssertErrorListHasMatch($"{weaverError} {type} {errorMessage}");
         }
     }
 }

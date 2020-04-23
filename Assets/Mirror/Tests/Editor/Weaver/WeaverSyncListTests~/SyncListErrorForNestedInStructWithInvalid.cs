@@ -1,14 +1,14 @@
-using UnityEngine;
 using Mirror;
+using UnityEngine;
 
-namespace MirrorTest
+namespace SyncListErrorForNestedInStructWithInvalid
 {
-    class SyncListNestedInStructWithInvalid : NetworkBehaviour
+    class MyBehaviour : NetworkBehaviour
     {
         SomeData.SyncList Foo;
     }
 
-    public struct SomeData 
+    public struct SomeData
     {
         public int usefulNumber;
         public Object target;

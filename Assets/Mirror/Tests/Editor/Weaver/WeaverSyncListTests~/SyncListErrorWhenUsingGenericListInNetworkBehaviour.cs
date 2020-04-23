@@ -1,8 +1,8 @@
 using Mirror;
 
-namespace MirrorTest
+namespace SyncListErrorWhenUsingGenericListInNetworkBehaviour
 {
-    class SyncListErrorWhenUsingGenericListInNetworkBehaviour : NetworkBehaviour
+    class MyBehaviour : NetworkBehaviour
     {
         readonly SomeList<int> someList;
     }

@@ -1,9 +1,9 @@
 using UnityEngine;
 using Mirror;
 
-namespace MirrorTest
+namespace SyncListNestedStruct
 {
-    class SyncListNestedStruct : NetworkBehaviour
+    class MyBehaviour : NetworkBehaviour
     {
         MyNestedStructList Foo;
         

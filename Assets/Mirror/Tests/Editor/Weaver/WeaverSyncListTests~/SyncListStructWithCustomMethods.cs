@@ -1,9 +1,9 @@
 using UnityEngine;
 using Mirror;
 
-namespace MirrorTest
+namespace SyncListStructWithCustomMethods
 {
-    class SyncListStructWithCustomMethods : NetworkBehaviour
+    class MyBehaviour : NetworkBehaviour
     {
         MyStructList Foo;
     }

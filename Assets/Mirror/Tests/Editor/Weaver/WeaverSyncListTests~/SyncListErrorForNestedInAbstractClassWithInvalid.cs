@@ -1,9 +1,9 @@
-using UnityEngine;
 using Mirror;
+using UnityEngine;
 
-namespace MirrorTest
+namespace SyncListErrorForNestedInAbstractClassWithInvalid
 {
-    class SyncListNestedStructWithInvalid : NetworkBehaviour
+    class MyBehaviour : NetworkBehaviour
     {
         SomeAbstractClass.MyNestedStructList Foo;
     }

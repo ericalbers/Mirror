@@ -1,8 +1,8 @@
 using Mirror;
 
-namespace MirrorTest
+namespace SyncListErrorForGenericStructWithCustomDeserializeOnly
 {
-    class SyncListErrorForGenericStructWithCustomDeserializeOnly : NetworkBehaviour
+    class MyBehaviour : NetworkBehaviour
     {
         MyGenericStructList harpseals;
     }

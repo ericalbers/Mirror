@@ -1,8 +1,8 @@
 using Mirror;
 
-namespace MirrorTest
+namespace SyncListGenericAbstractInheritance
 {
-    class SyncListGenericAbstractInheritance : NetworkBehaviour
+    class MyBehaviour : NetworkBehaviour
     {
         readonly SomeListInt superSyncListString = new SomeListInt();
     }
